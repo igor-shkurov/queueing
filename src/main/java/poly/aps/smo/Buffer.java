@@ -51,10 +51,18 @@ public class Buffer {
         }
     }
 
-    public void getRequest() {
+    public Request getRequest() throws Exception {
         if (this.isEmpty()) {
-
+            throw new Exception("Buffer is empty");
+        }
+        size--;
+        Request request = requests.get(fetchPosition);
+        requests.set(fetchPosition, null);
+        fetchPosition--;
+        if (fetchPosition == -1) {
+            fetchPosition = size - 1;
         }
 
+        return request;
     }
 }
