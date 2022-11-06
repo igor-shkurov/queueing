@@ -1,18 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableView?>
-<VBox alignment="BOTTOM_LEFT" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="poly.aps.smo.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Добавить заявку!" onAction="#onHelloButtonClick"/>
-    <TableView fx:id="tableView"/>
+<VBox alignment="BOTTOM_LEFT" prefHeight="535.0" prefWidth="886.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poly.aps.smo.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <Label opacity="0.49" prefHeight="0.0" prefWidth="384.0" text="Система Массового Обслуживания">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <TabPane prefHeight="915.0" prefWidth="846.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE">
+     <tabs>
+       <Tab text="Настройки">
+            <content>
+               <VBox prefHeight="200.0" prefWidth="100.0">
+                  <children>
+                     <HBox alignment="TOP_CENTER" prefHeight="10.0" prefWidth="846.0">
+                        <children>
+                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Источников" />
+                           <TextField />
+                        </children>
+                     </HBox>
+                     <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
+                        <children>
+                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Устройств" />
+                           <TextField />
+                        </children>
+                     </HBox>
+                     <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
+                        <children>
+                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Заявок" />
+                           <TextField />
+                        </children>
+                     </HBox>
+                     <HBox alignment="CENTER" layoutX="10.0" layoutY="36.0" prefHeight="10.0" prefWidth="846.0">
+                        <children>
+                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Мест в буфере" />
+                           <TextField />
+                        </children>
+                     </HBox>
+                     <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
+                        <children>
+                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="α" />
+                           <TextField />
+                        </children>
+                     </HBox>
+                     <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
+                        <children>
+                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="β" />
+                           <TextField />
+                        </children>
+                     </HBox>
+                     <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
+                        <children>
+                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="λ" />
+                           <TextField />
+                        </children>
+                     </HBox>
+                     <HBox alignment="CENTER" prefHeight="36.0" prefWidth="846.0">
+                        <children>
+                           <Button mnemonicParsing="false" text="Старт" />
+                        </children>
+                     </HBox>
+                  </children>
+               </VBox>
+            </content></Tab>
+       <Tab text="Пошаговый режим" />
+         <Tab text="Автоматический режим">
+            <content>
+               <GridPane>
+                 <columnConstraints>
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                 </columnConstraints>
+                 <rowConstraints>
+                   <RowConstraints maxHeight="276.0" minHeight="10.0" prefHeight="130.0" vgrow="SOMETIMES" />
+                   <RowConstraints maxHeight="253.0" minHeight="0.0" prefHeight="157.0" vgrow="SOMETIMES" />
+                   <RowConstraints maxHeight="169.0" minHeight="10.0" prefHeight="127.0" vgrow="SOMETIMES" />
+                 </rowConstraints>
+                  <children>
+                     <LineChart>
+                       <xAxis>
+                         <CategoryAxis side="BOTTOM" />
+                       </xAxis>
+                       <yAxis>
+                         <NumberAxis side="LEFT" />
+                       </yAxis>
+                     </LineChart>
+                     <LineChart title="kek" GridPane.columnIndex="1">
+                       <xAxis>
+                         <CategoryAxis side="BOTTOM" />
+                       </xAxis>
+                       <yAxis>
+                         <NumberAxis prefHeight="11.0" prefWidth="27.0" side="LEFT" />
+                       </yAxis>
+                     </LineChart>
+                     <LineChart GridPane.columnIndex="2">
+                       <xAxis>
+                         <CategoryAxis side="BOTTOM" />
+                       </xAxis>
+                       <yAxis>
+                         <NumberAxis side="LEFT" />
+                       </yAxis>
+                     </LineChart>
+                     <LineChart GridPane.rowIndex="1">
+                       <xAxis>
+                         <CategoryAxis side="BOTTOM" />
+                       </xAxis>
+                       <yAxis>
+                         <NumberAxis side="LEFT" />
+                       </yAxis>
+                     </LineChart>
+                     <LineChart title="urod" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                       <xAxis>
+                         <CategoryAxis side="BOTTOM" />
+                       </xAxis>
+                       <yAxis>
+                         <NumberAxis side="LEFT" />
+                       </yAxis>
+                     </LineChart>
+                     <LineChart GridPane.columnIndex="2" GridPane.rowIndex="1">
+                       <xAxis>
+                         <CategoryAxis side="BOTTOM" />
+                       </xAxis>
+                       <yAxis>
+                         <NumberAxis side="LEFT" />
+                       </yAxis>
+                     </LineChart>
+                     <LineChart GridPane.rowIndex="2">
+                       <xAxis>
+                         <CategoryAxis side="BOTTOM" />
+                       </xAxis>
+                       <yAxis>
+                         <NumberAxis side="LEFT" />
+                       </yAxis>
+                     </LineChart>
+                     <LineChart title="lox" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                       <xAxis>
+                         <CategoryAxis side="BOTTOM" />
+                       </xAxis>
+                       <yAxis>
+                         <NumberAxis side="LEFT" />
+                       </yAxis>
+                     </LineChart>
+                     <LineChart GridPane.columnIndex="2" GridPane.rowIndex="2">
+                       <xAxis>
+                         <CategoryAxis side="BOTTOM" />
+                       </xAxis>
+                       <yAxis>
+                         <NumberAxis side="LEFT" />
+                       </yAxis>
+                     </LineChart>
+                  </children>
+               </GridPane>
+            </content>
+         </Tab>
+     </tabs>
+   </TabPane>
 </VBox>
