@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="BOTTOM_LEFT" prefHeight="535.0" prefWidth="886.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poly.aps.smo.HelloController">
+<VBox alignment="BOTTOM_LEFT" prefHeight="535.0" prefWidth="886.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poly.aps.smo.ButtonController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -34,48 +34,48 @@
                      <HBox alignment="TOP_CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Источников" />
-                           <TextField />
+                           <TextField fx:id="sourceText" onAction="#applySettings" text="10"/>
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Устройств" />
-                           <TextField />
+                           <TextField fx:id="deviceText" onAction="#applySettings" text="3"/>
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Заявок" />
-                           <TextField />
+                           <TextField fx:id="requestText" onAction="#applySettings" text="2000" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" layoutX="10.0" layoutY="36.0" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Мест в буфере" />
-                           <TextField />
+                           <TextField fx:id="buffersizeText" onAction="#applySettings" text="3"/>
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="α" />
-                           <TextField />
+                           <TextField fx:id="alphaText" onAction="#applySettings" text="1"/>
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="β" />
-                           <TextField />
+                           <TextField fx:id="betaText" onAction="#applySettings" text="5"/>
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="λ" />
-                           <TextField />
+                           <TextField fx:id="lambdaText" onAction="#applySettings" text="3"/>
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="36.0" prefWidth="846.0">
                         <children>
-                           <Button mnemonicParsing="false" text="Старт" />
+                           <Button fx:id="buttonApply" mnemonicParsing="false" text="Применить" onAction="#applySettings"/>
                         </children>
                      </HBox>
                   </children>

@@ -42,15 +42,15 @@ public class Controller {
         return buffer;
     }
 
-    public Controller(long alpha, long beta, long lambda, int bufferSize, int totalTasksRequired) {
+    public Controller(int alpha, int beta, int lambda, int bufferSize, int totalTasksRequired, int sourceCount, int deviceCount) {
+        this.sourceCount = sourceCount;
+        this.deviceCount = deviceCount;
         this.totalTasksRequired = totalTasksRequired;
         eventSet = new TreeSet<>();
 
-        statistics = new StatController(100000.0, 10, 3);
+        statistics = new StatController(sourceCount, deviceCount);
         buffer = new Buffer(bufferSize);
-        sourceCount = statistics.getSourceCount();
         sources = new ArrayList<>(sourceCount);
-        deviceCount = statistics.getDeviceCount();
         devices = new TreeSet<>();
 
         initSources(alpha, beta);
@@ -107,5 +107,6 @@ public class Controller {
         while (!eventSet.isEmpty()) {
             doStep();
         }
+        System.out.println(statistics.getTotalTasksCreated());
     }
 }

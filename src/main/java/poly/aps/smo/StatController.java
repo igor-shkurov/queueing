@@ -6,8 +6,8 @@ public class StatController {
     public static StatController instance;
     private long totalTasksCreated;
     public long totalTasksProcessed;
-    private int sourceCount = 10;
-    private int deviceCount = 15;
+    private int sourceCount;
+    private int deviceCount;
     private final ArrayList<StatSource> sourcesStats;
     private final ArrayList<StatDevice> devicesStats;
 
