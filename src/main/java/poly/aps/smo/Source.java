@@ -4,22 +4,22 @@ import java.util.Random;
 
 public class Source {
     private final int deviceNumber;
-    private Long requestGenerated = 0L;
+    private long requestGenerated = 0L;
     private Random random = new Random();
-    private Long alpha;
-    private Long beta;
+    private long alpha;
+    private long beta;
 
-    public Source(int deviceNumber, Long alpha, Long beta) {
+    public Source(int deviceNumber, long alpha, long beta) {
         this.deviceNumber = deviceNumber;
         this.alpha = alpha;
         this.beta = beta;
     }
 
     public double nextRequestGenerationTime() {
-        return random.nextDouble() * (alpha - beta) - alpha;
+        return random.nextDouble() * (beta - alpha) + alpha;
     }
 
-    public Request generateNewRequest(Long currentTime) {
+    public Request generateNewRequest(double currentTime) {
         requestGenerated++;
         return Request.generateNewRequest(currentTime, deviceNumber, deviceNumber + "." + requestGenerated);
     }

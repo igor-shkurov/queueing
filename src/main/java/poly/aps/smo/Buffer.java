@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.EmptyStackException;
 
 public class Buffer {
+    private final StatController statstics;
     private final ArrayList<Request> requests;
-    private int fetchPosition = 0;
-    private int placePosition = 0;
-    private int cancelPosition = 0;
+    private int fetchPosition = 1;
+    private int placePosition = 1;
     private int size = 0; // occupied with requests
     private final int capacity; // buffer size according to settings
 
     public Buffer(int capacity) {
         this.capacity = capacity;
-        requests = new ArrayList<>(capacity);
+        requests = new ArrayList<>(capacity + 1);
+        statstics = StatController.instance;
+        for (int i = 0; i < capacity + 1; i++) {
+            requests.add(i, null);
+        }
     }
 
     public int getFetchPosition() {
@@ -37,32 +41,33 @@ public class Buffer {
     }
 
     public void addRequest(Request request) {
-        size++;
+        if (placePosition == capacity + 1) {
+            placePosition = 1;
+        }
+
         if (size == capacity) {
-            Request canceledRequest = requests.get(cancelPosition);
-            cancelPosition++;
+            Request canceledRequest = requests.get(placePosition);
+            statstics.taskRejected(canceledRequest.getSourceNumber(), request.getStartTime() - canceledRequest.getStartTime());
         }
-
+        else {
+            size++;
+        }
         requests.set(placePosition, request);
-        fetchPosition = placePosition++;
 
-        if (size == placePosition) {
-            placePosition = 0;
-        }
+        placePosition++;
     }
 
     public Request getRequest() throws Exception {
         if (this.isEmpty()) {
             throw new Exception("Buffer is empty");
         }
-        size--;
-        Request request = requests.get(fetchPosition);
-        requests.set(fetchPosition, null);
-        fetchPosition--;
-        if (fetchPosition == -1) {
-            fetchPosition = size - 1;
+        placePosition--;
+        if (placePosition == 0) {
+            placePosition = capacity;
         }
-
+        Request request = requests.get(placePosition);
+        requests.set(placePosition, null);
+        size--;
         return request;
     }
 }

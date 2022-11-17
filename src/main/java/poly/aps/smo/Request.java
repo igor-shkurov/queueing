@@ -6,7 +6,7 @@ public class Request {
     private final double startTime;
     private final String requestId;
 
-    private Request(int sourceNumber, Long startTime, String requestId) {
+    private Request(int sourceNumber, double startTime, String requestId) {
         this.sourceNumber = sourceNumber;
         this.startTime = startTime;
         this.requestId = requestId;
@@ -32,7 +32,7 @@ public class Request {
         this.processedBy = processedBy;
     }
 
-    public static Request generateNewRequest(Long startTime, int sourceNumber, String requestId) {
+    public static Request generateNewRequest(double startTime, int sourceNumber, String requestId) {
         return new Request(sourceNumber, startTime, requestId);
     }
 }

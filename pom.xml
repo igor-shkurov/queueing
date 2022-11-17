@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>poly.aps.smo/poly.aps.smo.HelloApplication</mainClass>
+                            <mainClass>poly.aps.smo/poly.aps.smo.MainWindow</mainClass>
                         </configuration>
                     </execution>
                 </executions>

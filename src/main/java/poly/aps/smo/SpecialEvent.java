@@ -1,11 +1,20 @@
 package poly.aps.smo;
 
-public class SpecialEvent {
+import java.util.Comparator;
+
+public class SpecialEvent implements Comparable<SpecialEvent> {
+    @Override
+    public int compareTo(SpecialEvent o) {
+        return Comparator.comparing(SpecialEvent::getEventTime)
+                .thenComparing(SpecialEvent::getEventTypeOrdinal)
+                .compare(this, o);
+    }
+
     public enum EventType
     {
-        GenerateTask,
-        TaskUnbuffered,
-        TaskCompleted
+        GenerateRequest,
+        RequestUnbuffered,
+        RequestCompleted
     };
 
     private final double eventTime;
@@ -22,8 +31,8 @@ public class SpecialEvent {
         return eventTime;
     }
 
-    public EventType getEventType() {
-        return eventType;
+    public int getEventTypeOrdinal() {
+        return eventType.ordinal();
     }
 
     public int getAssignedDevice() {
@@ -32,15 +41,5 @@ public class SpecialEvent {
 
     public void setAssignedDevice(int assignedDevice) {
         this.assignedDevice = assignedDevice;
-    }
-
-    static boolean compare(SpecialEvent l, SpecialEvent r) {
-        if (l.getEventTime() < r.getEventTime()) {
-            return true;
-        } else if (l.getEventTime() > r.getEventTime()) {
-            return false;
-        } else {
-            return l.getEventType().ordinal() > r.getEventType().ordinal();
-        }
     }
 }
