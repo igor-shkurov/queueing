@@ -12,8 +12,9 @@ public class Controller {
     private final int sourceCount;
     private final int deviceCount;
     private final ArrayList<Source> sources;
-    private final TreeSet<Device> devices;
+    private final ArrayList<Device> devices;
     private final TreeSet<SpecialEvent> eventSet;
+    private int currentDeviceNum = 0;
 
     private void initSources(long alpha, long beta) {
         for (int i = 0; i < sourceCount; i++) {
@@ -42,7 +43,7 @@ public class Controller {
         return buffer;
     }
 
-    public TreeSet<Device> getDevices() {
+    public ArrayList<Device> getDevices() {
         return devices;
     }
 
@@ -59,7 +60,7 @@ public class Controller {
         statistics = new StatController(sourceCount, deviceCount);
         buffer = new Buffer(bufferSize);
         sources = new ArrayList<>(sourceCount);
-        devices = new TreeSet<>();
+        devices = new ArrayList<>(deviceCount);
 
         initSources(alpha, beta);
         initDevices(lambda);
@@ -87,8 +88,17 @@ public class Controller {
         eventSet.remove(eventSet.first());
         currentTime = specialEvent.getEventTime();
         int deviceId = specialEvent.getAssignedDevice();
+        Device currentDevice;
         switch (specialEvent.getEventTypeOrdinal()) {
             case 0:
+                if (!buffer.isEmpty()) {
+                    if (!devices.stream().allMatch(Device::isBusy)) {
+                        Request request = buffer.getRequest();
+                        currentDevice = devices.stream().filter(device -> !device.isBusy()).findAny().get();
+                        eventSet.add(new SpecialEvent(currentTime + currentDevice.setNextRequest(request, currentTime),
+                                SpecialEvent.EventType.RequestCompleted, currentDevice.getDeviceNumber()));
+                    }
+                }
                 if (statistics.getTotalTasksCreated() < totalTasksRequired) {
                     buffer.addRequest(sources.get(deviceId).generateNewRequest(currentTime));
                     eventSet.add(new SpecialEvent(currentTime + sources.get(deviceId).nextRequestGenerationTime(),
@@ -98,29 +108,44 @@ public class Controller {
                 }
                 break;
             case 1:
-                if (!devices.first().isBusy()) {
-                    Device currentDevice = devices.first();
-                    devices.remove(devices.first());
-                    if (buffer.isEmpty() || currentDevice.isBusy()) {
-                        devices.add(currentDevice);
-                        break;
-                    }
-                    Request request = buffer.getRequest();
-                    eventSet.add(new SpecialEvent(currentTime + currentDevice.setNextRequest(request, currentTime),
-                            SpecialEvent.EventType.RequestCompleted, currentDevice.getDeviceNumber()));
-                    devices.add(currentDevice);
+                if (devices.stream().allMatch(Device::isBusy)) {
+                    break;
                 }
+                else {
+                    do {
+                        currentDevice = devices.get(currentDeviceNum);
+                        currentDeviceNum++;
+                        if (currentDeviceNum == deviceCount) {
+                            currentDeviceNum = 0;
+                        }
+                    }
+                    while (currentDevice.isBusy());
+                }
+                Request request = buffer.getRequest();
+                eventSet.add(new SpecialEvent(currentTime + currentDevice.setNextRequest(request, currentTime),
+                        SpecialEvent.EventType.RequestCompleted, currentDevice.getDeviceNumber()));
                 break;
             case 2:
-                Device currentDevice = devices.stream().filter(device -> device.getDeviceNumber() == deviceId).findAny().get();
-                devices.remove(currentDevice);
-
-                 statistics.taskFinished(currentDevice.getCurrentRequest().getSourceNumber(), deviceId,
+//                if (!buffer.isEmpty()) {
+//                    if (!devices.stream().allMatch(Device::isBusy)) {
+//                        request = buffer.getRequest();
+//                        currentDevice = devices.stream().filter(device -> !device.isBusy()).findAny().get();
+//                        eventSet.add(new SpecialEvent(currentTime + currentDevice.setNextRequest(request, currentTime),
+//                                SpecialEvent.EventType.RequestCompleted, currentDevice.getDeviceNumber()));
+//                    }
+//                }
+                currentDevice = devices.get(deviceId);
+                statistics.taskFinished(currentDevice.getCurrentRequest().getSourceNumber(), deviceId,
                          currentTime - currentDevice.getCurrentRequest().getStartTime(),
                          currentTime - currentDevice.getTaskStartTime());
                 currentDevice.setNextRequest(null, currentTime);
-                devices.add(currentDevice);
-//                eventSet.add(new SpecialEvent(currentTime, SpecialEvent.EventType.RequestUnbuffered, -1));
+//                if (!buffer.isEmpty()) {
+//                    eventSet.add(new SpecialEvent(currentTime, SpecialEvent.EventType.RequestUnbuffered, -1));
+//                }
+//                devices.add(currentDevice);
+//                if (devices.stream().filter(Device::isBusy).count() == deviceCount - 1) {
+//                    eventSet.add(new SpecialEvent(currentTime, SpecialEvent.EventType.RequestUnbuffered, -1));
+//                }
                 break;
             default:
                 break;

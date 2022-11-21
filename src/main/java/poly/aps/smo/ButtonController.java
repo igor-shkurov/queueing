@@ -21,6 +21,8 @@ public class ButtonController {
     @FXML
     private Label timeField, tasksCompleted;
     @FXML
+    public Label cancelNum;
+    @FXML
     private Button startStepping, doStep;
     @FXML
     private Label s1, s2, s3, s4, s5, s6, s7, s8, s9, s10;
@@ -57,21 +59,18 @@ public class ButtonController {
     @FXML
     public void doStep(ActionEvent actionEvent) {
         Label[] sourceLabels = {s1, s2, s3, s4, s5, s6, s7, s8, s9, s10};
-        Rectangle[] sourceRectangles = {rs1, rs2, rs3, rs4, rs5, rs6, rs7, rs8, rs9, rs10};
         Label[] deviceLabels = {d1, d2, d3, d4, d5, d6, d7, d8, d9, d10};
-        Rectangle[] deviceRectangles = {rd1, rd2, rd3, rd4, rd5, rd6, rd7, rd8, rd9, rd10};
         Label[] bufferLabels = {b1, b2, b3, b4, b5, b6, b7, b8, b9, b10};
-        Rectangle[] bufferRectangles = {br1, br2, br3, br4, br5, br6, br7, br8, br9, br10};
         Controller controller = Controller.instance;
         StatController statController = StatController.instance;
 
         SpecialEvent event = controller.getFirstEvent();
 
         TreeSet<SpecialEvent> events = controller.goToNextState();
-        TreeSet<Device> devices = controller.getDevices();
+        ArrayList<Device> devices = controller.getDevices();
         ArrayList<Source> sources = controller.getSources();
         Buffer buffer = controller.getBuffer();
-
+//
         for (SpecialEvent x: events) {
             System.out.println(x.getEventTypeOrdinal() + ":" + x.getEventTime());
         }
@@ -80,6 +79,8 @@ public class ButtonController {
         for (Label x: sourceLabels) {
             x.setVisible(false);
         }
+
+
 
 //        for (Label x: deviceLabels) {
 //            x.setVisible(false);
@@ -91,6 +92,26 @@ public class ButtonController {
 
         Label bufferLabel;
         Label deviceLabel;
+
+        for (Device d: devices) {
+            if (d.isBusy()) {
+                deviceLabel = deviceLabels[d.getDeviceNumber()];
+                deviceLabel.setVisible(true);
+                deviceLabel.setText("Занят");
+                System.out.println(d.getCurrentRequest());
+            }
+        }
+
+        for (int i = 0; i < buffer.getCapacity(); i++) {
+            if (buffer.posBusy(i)) {
+                bufferLabels[i].setVisible(true);
+                bufferLabels[i].setText("Занят");
+            }
+            else {
+                bufferLabels[i].setVisible(false);
+            }
+        }
+
         timeField.setText(String.valueOf(controller.getCurrentTime()));
         tasksCompleted.setText(controller.totalTasksRequired + "/" + statController.getTotalTasksProcessed());
         int tasksGen = 0;
@@ -100,21 +121,8 @@ public class ButtonController {
                 Label sourceLabel = sourceLabels[event.getAssignedDevice()];
                 sourceLabel.setText("Сгенерировал");
                 sourceLabel.setVisible(true);
-                bufferLabel = bufferLabels[buffer.getFetchPosition() - 1];
-                bufferLabel.setText("Занят: " + (event.getAssignedDevice() + 1) + ":" + tasksGen);
-                bufferLabel.setVisible(true);
                 break;
             case 1:
-                bufferLabel = bufferLabels[buffer.getFetchPosition() - 1];
-                bufferLabel.setText("");
-                bufferLabel.setVisible(true);
-                for (Device d: devices) {
-                    if (d.isBusy()) {
-                        deviceLabel = deviceLabels[d.getDeviceNumber()];
-                        deviceLabel.setVisible(true);
-                        deviceLabel.setText("Занят");
-                    }
-                }
                 break;
             case 2:
                 deviceLabel = deviceLabels[event.getAssignedDevice()];
@@ -126,11 +134,8 @@ public class ButtonController {
 
     @FXML
     public void startStepping(ActionEvent actionEvent) {
-        Label[] sourceLabels = {s1, s2, s3, s4, s5, s6, s7, s8, s9, s10};
         Rectangle[] sourceRectangles = {rs1, rs2, rs3, rs4, rs5, rs6, rs7, rs8, rs9, rs10};
-        Label[] deviceLabels = {d1, d2, d3, d4, d5, d6, d7, d8, d9, d10};
         Rectangle[] deviceRectangles = {rd1, rd2, rd3, rd4, rd5, rd6, rd7, rd8, rd9, rd10};
-        Label[] bufferLabels = {b1, b2, b3, b4, b5, b6, b7, b8, b9, b10};
         Rectangle[] bufferRectangles = {br1, br2, br3, br4, br5, br6, br7, br8, br9, br10};
         Controller controller = Controller.instance;
         StatController statController = StatController.instance;
@@ -138,15 +143,12 @@ public class ButtonController {
         startStepping.setDisable(true);
         doStep.setDisable(false);
         for (int i = 0; i < statController.getSourceCount(); i++) {
-//            sourceLabels[i].setVisible(true);
             sourceRectangles[i].setVisible(true);
         }
         for (int i = 0; i < statController.getDeviceCount(); i++) {
-//            deviceLabels[i].setVisible(true);
             deviceRectangles[i].setVisible(true);
         }
         for (int i = 0; i < controller.getBuffer().getCapacity(); i++) {
-//            bufferLabels[i].setVisible(true);
             bufferRectangles[i].setVisible(true);
         }
     }

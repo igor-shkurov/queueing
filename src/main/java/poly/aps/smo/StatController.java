@@ -97,6 +97,14 @@ public class StatController {
         totalTasksProcessed++;
     }
 
+    public int getRejectedTasks() {
+        int rejected = 0;
+        for (StatSource ss: sourcesStats) {
+            rejected += ss.getRejectedTasksCount();
+        }
+        return rejected;
+    }
+
     public void setSourceCount(int sourceCount) {
         this.sourceCount = sourceCount;
     }
