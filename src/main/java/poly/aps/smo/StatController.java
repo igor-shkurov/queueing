@@ -26,6 +26,33 @@ public class StatController {
         instance = this;
     }
 
+     double getCancelProb() {
+        double prob = 0;
+        for (StatSource source: sourcesStats) {
+            prob += (double) source.getRejectedTasksCount() / source.getGeneratedTasksCount();
+        }
+        return prob / sourceCount;
+    }
+
+    public double getAverageTime() {
+        double allProcessTime = 0;
+        double allBufferedTime = 0;
+        for (StatSource source: sourcesStats) {
+            System.out.println(source.getTasksTotalTime());
+            allProcessTime += source.getTasksTotalTime();
+            allBufferedTime += source.getBufferedTime();
+        }
+        return allBufferedTime / sourceCount + allProcessTime / sourceCount;
+    }
+
+    public double getAverageWorkingTime() {
+        double allBusiness = 0;
+        for (StatDevice device: devicesStats) {
+            allBusiness += device.getTotalWorkingTime();
+        }
+        return allBusiness / deviceCount;
+    }
+
     public long getTotalTasksCreated() {
         return totalTasksCreated;
     }
@@ -55,12 +82,12 @@ public class StatController {
         sourcesStats.get(source).addGeneratedTask();
     }
 
-    public void taskFinished(int source, int processedBy, double workingTime, double processedTime) { // workingTime - time on device; processedTime - time in system
+    public void taskFinished(int source, int processedBy, double consumptedTime, double processedTime) { // workingTime - time on device; processedTime - time in system
         if (processedBy != -1) {
-            devicesStats.get(processedBy).addWorkingTime(workingTime);
+            devicesStats.get(processedBy).addWorkingTime(processedTime);
         }
-        sourcesStats.get(source).addFinishedTaskTime(processedTime);
-        sourcesStats.get(source).addBufferedTime(processedTime - workingTime);
+        sourcesStats.get(source).addFinishedTaskTime(consumptedTime);
+        sourcesStats.get(source).addBufferedTime(consumptedTime - processedTime);
         totalTasksProcessed++;
     }
 

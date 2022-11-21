@@ -34,23 +34,6 @@ public class MainWindow extends Application {
         Parent root = loader.load();
         stage.setScene(new Scene(root));
         stage.show();
-
-//        TextField textField = (TextField) root.lookup("sourceText");
-//        int sourceCount = Integer.parseInt(textField.getText());
-//        textField = (TextField) root.lookup("#deviceText");
-//        int deviceCount = Integer.parseInt(textField.getText());
-//        textField = (TextField) root.lookup("#requestText");
-//        int requestCount = Integer.parseInt(textField.getText());
-//        textField = (TextField) root.lookup("#buffersizeText");
-//        int bufferSize = Integer.parseInt(textField.getText());
-//        textField = (TextField) root.lookup("#alphaText");
-//        int alpha = Integer.parseInt(textField.getText());
-//        textField = (TextField) root.lookup("#betaText");
-//        int beta = Integer.parseInt(textField.getText());
-//        textField = (TextField) root.lookup("#lambdaText");
-//        int lambda = Integer.parseInt(textField.getText());
-//        Controller controller = new Controller(alpha, beta, lambda, bufferSize, requestCount, sourceCount, deviceCount);
-//        controller.executeAuto();
     }
 
     public static void main(String[] args) {

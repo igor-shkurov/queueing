@@ -1,10 +1,10 @@
 package poly.aps.smo;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class Controller {
+    public static Controller instance;
     private final StatController statistics;
     private double currentTime = 0.0;
     int totalTasksRequired;
@@ -42,6 +42,14 @@ public class Controller {
         return buffer;
     }
 
+    public TreeSet<Device> getDevices() {
+        return devices;
+    }
+
+    public ArrayList<Source> getSources() {
+        return sources;
+    }
+
     public Controller(int alpha, int beta, int lambda, int bufferSize, int totalTasksRequired, int sourceCount, int deviceCount) {
         this.sourceCount = sourceCount;
         this.deviceCount = deviceCount;
@@ -56,6 +64,22 @@ public class Controller {
         initSources(alpha, beta);
         initDevices(lambda);
         initEventSet();
+        instance = this;
+    }
+
+    public SpecialEvent getFirstEvent() {
+        return eventSet.first();
+    }
+
+    public TreeSet<SpecialEvent> goToNextState() {
+        if (!eventSet.isEmpty()) {
+            try {
+                doStep();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return eventSet;
     }
 
     public void doStep() throws Exception {
@@ -96,7 +120,7 @@ public class Controller {
                          currentTime - currentDevice.getTaskStartTime());
                 currentDevice.setNextRequest(null, currentTime);
                 devices.add(currentDevice);
-                eventSet.add(new SpecialEvent(currentTime, SpecialEvent.EventType.RequestUnbuffered, -1));
+//                eventSet.add(new SpecialEvent(currentTime, SpecialEvent.EventType.RequestUnbuffered, -1));
                 break;
             default:
                 break;
@@ -107,6 +131,5 @@ public class Controller {
         while (!eventSet.isEmpty()) {
             doStep();
         }
-        System.out.println(statistics.getTotalTasksCreated());
     }
 }

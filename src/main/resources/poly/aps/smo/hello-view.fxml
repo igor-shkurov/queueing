@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
@@ -9,14 +8,17 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="BOTTOM_LEFT" prefHeight="535.0" prefWidth="886.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poly.aps.smo.ButtonController">
+<VBox alignment="BOTTOM_LEFT" prefHeight="844.0" prefWidth="1148.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poly.aps.smo.ButtonController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -34,13 +36,13 @@
                      <HBox alignment="TOP_CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Источников" />
-                           <TextField fx:id="sourceText" onAction="#applySettings" text="10"/>
+                           <TextField fx:id="sourceText" onAction="#applySettings" text="10" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Устройств" />
-                           <TextField fx:id="deviceText" onAction="#applySettings" text="3"/>
+                           <TextField fx:id="deviceText" onAction="#applySettings" text="3" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
@@ -52,124 +54,352 @@
                      <HBox alignment="CENTER" layoutX="10.0" layoutY="36.0" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Мест в буфере" />
-                           <TextField fx:id="buffersizeText" onAction="#applySettings" text="3"/>
+                           <TextField fx:id="buffersizeText" onAction="#applySettings" text="3" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="α" />
-                           <TextField fx:id="alphaText" onAction="#applySettings" text="1"/>
+                           <TextField fx:id="alphaText" onAction="#applySettings" text="1" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="β" />
-                           <TextField fx:id="betaText" onAction="#applySettings" text="5"/>
+                           <TextField fx:id="betaText" onAction="#applySettings" text="5" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="λ" />
-                           <TextField fx:id="lambdaText" onAction="#applySettings" text="3"/>
+                           <TextField fx:id="lambdaText" onAction="#applySettings" text="3" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="36.0" prefWidth="846.0">
                         <children>
-                           <Button fx:id="buttonApply" mnemonicParsing="false" text="Применить" onAction="#applySettings"/>
+                           <Button fx:id="buttonApply" mnemonicParsing="false" onAction="#applySettings" text="Применить" />
                         </children>
                      </HBox>
                   </children>
                </VBox>
             </content></Tab>
-       <Tab text="Пошаговый режим" />
+       <Tab text="Пошаговый режим">
+            <content>
+               <VBox>
+                  <children>
+                     <HBox prefHeight="100.0" prefWidth="200.0">
+                        <children>
+                           <VBox prefHeight="724.0" prefWidth="359.0">
+                              <children>
+                                 <Label text="Источники:" />
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rs1" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="s1" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rs2" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="s2" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rs3" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="s3" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rs4" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="s4" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rs5" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="s5" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rs6" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="s6" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rs7" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="s7" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rs8" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="s8" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rs9" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="s9" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rs10" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="s10" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                              </children>
+                           </VBox>
+                           <VBox prefHeight="724.0" prefWidth="377.0">
+                              <children>
+                                 <Label text="Буферные места:" />
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="br1" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="b1" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="br2" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="b2" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="br3" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="b3" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="br4" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="b4" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="br5" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="b5" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="br6" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="b6" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="br7" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="b7" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="br8" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="b8" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="br9" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="b9" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="br10" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="b10" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                              </children>
+                           </VBox>
+                           <VBox prefHeight="724.0" prefWidth="373.0">
+                              <children>
+                                 <Label alignment="TOP_LEFT" text="Устройства:" />
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rd1" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="d1" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rd2" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="d2" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rd3" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="d3" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rd4" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="d4" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rd5" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="d5" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rd6" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="d6" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rd7" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="d7" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rd8" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="d8" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rd9" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="d9" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                                 <StackPane>
+                                    <children>
+                                       <Rectangle fx:id="rd10" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
+                                       <Label fx:id="d10" text="lol" textFill="#f8eded" visible="false" />
+                                    </children>
+                                 </StackPane>
+                              </children>
+                           </VBox>
+                        </children>
+                     </HBox>
+                     <AnchorPane prefHeight="54.0" prefWidth="1108.0">
+                        <children>
+                           <Button fx:id="doStep" disable="true" layoutY="1.0" mnemonicParsing="false" onAction="#doStep" prefHeight="45.0" prefWidth="133.0" text="Сделать шаг" />
+                           <Label layoutX="394.0" layoutY="15.0" text="Текущее время:" />
+                           <Label fx:id="timeField" layoutX="494.0" layoutY="15.0" prefHeight="17.0" prefWidth="69.0" text="null" />
+                           <Button fx:id="startStepping" layoutX="1018.0" layoutY="1.0" mnemonicParsing="false" onAction="#startStepping" prefHeight="45.0" prefWidth="87.0" text="Запуск" />
+                           <Label layoutX="635.0" layoutY="15.0" text="Выполнено:" />
+                           <Label fx:id="tasksCompleted" layoutX="711.0" layoutY="15.0" prefHeight="17.0" prefWidth="75.0" text="null" />
+                        </children>
+                     </AnchorPane>
+                  </children>
+               </VBox>
+            </content></Tab>
          <Tab text="Автоматический режим">
             <content>
-               <GridPane>
-                 <columnConstraints>
-                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                 </columnConstraints>
-                 <rowConstraints>
-                   <RowConstraints maxHeight="276.0" minHeight="10.0" prefHeight="130.0" vgrow="SOMETIMES" />
-                   <RowConstraints maxHeight="253.0" minHeight="0.0" prefHeight="157.0" vgrow="SOMETIMES" />
-                   <RowConstraints maxHeight="169.0" minHeight="10.0" prefHeight="127.0" vgrow="SOMETIMES" />
-                 </rowConstraints>
+               <VBox prefHeight="511.0" prefWidth="1108.0">
                   <children>
-                     <LineChart>
-                       <xAxis>
-                         <CategoryAxis side="BOTTOM" />
-                       </xAxis>
-                       <yAxis>
-                         <NumberAxis side="LEFT" />
-                       </yAxis>
-                     </LineChart>
-                     <LineChart title="kek" GridPane.columnIndex="1">
-                       <xAxis>
-                         <CategoryAxis side="BOTTOM" />
-                       </xAxis>
-                       <yAxis>
-                         <NumberAxis prefHeight="11.0" prefWidth="27.0" side="LEFT" />
-                       </yAxis>
-                     </LineChart>
-                     <LineChart GridPane.columnIndex="2">
-                       <xAxis>
-                         <CategoryAxis side="BOTTOM" />
-                       </xAxis>
-                       <yAxis>
-                         <NumberAxis side="LEFT" />
-                       </yAxis>
-                     </LineChart>
-                     <LineChart GridPane.rowIndex="1">
-                       <xAxis>
-                         <CategoryAxis side="BOTTOM" />
-                       </xAxis>
-                       <yAxis>
-                         <NumberAxis side="LEFT" />
-                       </yAxis>
-                     </LineChart>
-                     <LineChart title="urod" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                       <xAxis>
-                         <CategoryAxis side="BOTTOM" />
-                       </xAxis>
-                       <yAxis>
-                         <NumberAxis side="LEFT" />
-                       </yAxis>
-                     </LineChart>
-                     <LineChart GridPane.columnIndex="2" GridPane.rowIndex="1">
-                       <xAxis>
-                         <CategoryAxis side="BOTTOM" />
-                       </xAxis>
-                       <yAxis>
-                         <NumberAxis side="LEFT" />
-                       </yAxis>
-                     </LineChart>
-                     <LineChart GridPane.rowIndex="2">
-                       <xAxis>
-                         <CategoryAxis side="BOTTOM" />
-                       </xAxis>
-                       <yAxis>
-                         <NumberAxis side="LEFT" />
-                       </yAxis>
-                     </LineChart>
-                     <LineChart title="lox" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                       <xAxis>
-                         <CategoryAxis side="BOTTOM" />
-                       </xAxis>
-                       <yAxis>
-                         <NumberAxis side="LEFT" />
-                       </yAxis>
-                     </LineChart>
-                     <LineChart GridPane.columnIndex="2" GridPane.rowIndex="2">
-                       <xAxis>
-                         <CategoryAxis side="BOTTOM" />
-                       </xAxis>
-                       <yAxis>
-                         <NumberAxis side="LEFT" />
-                       </yAxis>
-                     </LineChart>
+                     <GridPane prefHeight="689.0" prefWidth="1108.0">
+                       <columnConstraints>
+                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                         <RowConstraints maxHeight="276.0" minHeight="10.0" prefHeight="233.0" vgrow="SOMETIMES" />
+                         <RowConstraints maxHeight="253.0" minHeight="0.0" prefHeight="227.0" vgrow="SOMETIMES" />
+                         <RowConstraints maxHeight="220.0" minHeight="10.0" prefHeight="227.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                        <children>
+                           <LineChart fx:id="sourceCancel" prefHeight="137.0" prefWidth="282.0" title="Вероятность отказа/источники">
+                             <xAxis>
+                               <NumberAxis side="BOTTOM" />
+                             </xAxis>
+                             <yAxis>
+                               <NumberAxis side="LEFT" />
+                             </yAxis>
+                           </LineChart>
+                           <LineChart fx:id="sourceAverage" prefHeight="26.0" prefWidth="282.0" title="Ср. время в системе/источники" GridPane.columnIndex="1">
+                             <xAxis>
+                               <NumberAxis side="BOTTOM" />
+                             </xAxis>
+                             <yAxis>
+                               <NumberAxis prefHeight="11.0" prefWidth="27.0" side="LEFT" />
+                             </yAxis>
+                           </LineChart>
+                           <LineChart fx:id="sourceBusiness" title="Загруженность приборов/источники" GridPane.columnIndex="2">
+                             <xAxis>
+                               <NumberAxis side="BOTTOM" />
+                             </xAxis>
+                             <yAxis>
+                               <NumberAxis side="LEFT" />
+                             </yAxis>
+                           </LineChart>
+                           <LineChart fx:id="deviceCancel" prefHeight="222.0" prefWidth="370.0" title="Вероятность отказа/приборы" GridPane.rowIndex="1">
+                             <xAxis>
+                               <NumberAxis side="BOTTOM" />
+                             </xAxis>
+                             <yAxis>
+                               <NumberAxis side="LEFT" />
+                             </yAxis>
+                           </LineChart>
+                           <LineChart fx:id="deviceAverage" prefHeight="96.0" prefWidth="342.0" title="Ср. время в системе/приборы" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                             <xAxis>
+                               <NumberAxis side="BOTTOM" />
+                             </xAxis>
+                             <yAxis>
+                               <NumberAxis side="LEFT" />
+                             </yAxis>
+                           </LineChart>
+                           <LineChart fx:id="deviceBusiness" title="Загруженность приборов/приборы" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                             <xAxis>
+                               <NumberAxis side="BOTTOM" />
+                             </xAxis>
+                             <yAxis>
+                               <NumberAxis side="LEFT" />
+                             </yAxis>
+                           </LineChart>
+                           <LineChart fx:id="bufferCancel" prefHeight="337.0" prefWidth="358.0" title="Вероятность отказа/буфер" GridPane.rowIndex="2">
+                             <xAxis>
+                               <NumberAxis side="BOTTOM" />
+                             </xAxis>
+                             <yAxis>
+                               <NumberAxis side="LEFT" />
+                             </yAxis>
+                           </LineChart>
+                           <LineChart fx:id="bufferAverage" title="Ср. время в системе/буфер" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                             <xAxis>
+                               <NumberAxis side="BOTTOM" />
+                             </xAxis>
+                             <yAxis>
+                               <NumberAxis side="LEFT" />
+                             </yAxis>
+                           </LineChart>
+                           <LineChart fx:id="bufferBusiness" title="Загруженность приборов/буфер" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                             <xAxis>
+                               <NumberAxis side="BOTTOM" />
+                             </xAxis>
+                             <yAxis>
+                               <NumberAxis side="LEFT" />
+                             </yAxis>
+                           </LineChart>
+                        </children>
+                     </GridPane>
+                     <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="1108.0">
+                        <children>
+                           <HBox>
+                              <children>
+                                 <Button fx:id="buttonAuto" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#launchAutoMode" prefHeight="29.0" prefWidth="217.0" text="Запустить автоматический режим" />
+                              </children>
+                           </HBox>
+                        </children>
+                     </AnchorPane>
                   </children>
-               </GridPane>
+               </VBox>
             </content>
          </Tab>
      </tabs>
