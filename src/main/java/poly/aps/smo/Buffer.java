@@ -12,6 +12,7 @@ public class Buffer {
     private long fetchPosition = 0;
     private long placePosition = 0;
     private long cancelPosition = 0;
+    private boolean flagCancel;
     private long size = 0; // occupied with requests
     private final int capacity; // buffer size according to settings
 
@@ -32,6 +33,14 @@ public class Buffer {
         return placePosition;
     }
 
+    public long getCancelPosition() {
+        return cancelPosition;
+    }
+
+    public boolean isFlagCancel() {
+        return flagCancel;
+    }
+
     public long getSize() {
         return size;
     }
@@ -45,7 +54,7 @@ public class Buffer {
     }
 
     public boolean isEmpty() {
-        return size == 0;
+        return requests.stream().allMatch(Objects::isNull);
     }
 
     public Request findOldest() {
@@ -53,18 +62,17 @@ public class Buffer {
         return opt.orElse(null);
     }
 
-    public void addRequest(Request request) throws IOException {
-        if (size == capacity) {
+    public void addRequest(Request request) {
+        if (getSize() == capacity) {
+            flagCancel = true;
             Request canceledRequest = findOldest();
-            System.out.println("Отказ с " + requests.indexOf(canceledRequest) + " источника");
-            requests.set(requests.indexOf(canceledRequest), request);
+            cancelPosition = requests.indexOf(canceledRequest);
+            requests.set((int) cancelPosition, request);
             statistics.taskRejected(canceledRequest.getSourceNumber(), request.getStartTime() - canceledRequest.getStartTime());
         }
         else {
+            flagCancel = false;
             while (posBusy(placePosition)) {;
-                System.out.println("size: " + size + " capacity: " + capacity + " placePos " + placePosition);
-                System.out.println(requests.size());
-
                 placePosition++;
                 if (placePosition == capacity) {
                     placePosition = 0;
@@ -73,29 +81,23 @@ public class Buffer {
             requests.set((int) placePosition, request);
             size = requests.stream().filter(Objects::nonNull).count();
         }
-        for (Request r: requests) {
-            System.out.println(r);
-        }
     }
 
     public Request getRequest() {
+        flagCancel = false;
         fetchPosition = placePosition;
         Request request = requests.get((int) fetchPosition);
         while (request == null) {
             if (fetchPosition == 0) {
-                fetchPosition = capacity;
+                fetchPosition = capacity - 1;
             }
             else {
                 fetchPosition--;
             }
             request = requests.get((int) fetchPosition);
         }
-        requests.set((int) placePosition, null);
+        requests.set((int) fetchPosition, null);
         size = requests.stream().filter(Objects::nonNull).count();
-        for (Request r: requests) {
-            System.out.println(r);
-        }
-        System.out.println("size: " + size + " capacity: " + capacity + " placePos: " + placePosition + " fetchPos: " + fetchPosition);
         return request;
     }
 }

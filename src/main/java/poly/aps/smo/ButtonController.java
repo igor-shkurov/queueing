@@ -67,10 +67,12 @@ public class ButtonController {
         SpecialEvent event = controller.getFirstEvent();
 
         TreeSet<SpecialEvent> events = controller.goToNextState();
+        if (events.isEmpty() || statController.getTotalTasksProcessed() == controller.totalTasksRequired) {
+            doStep.setDisable(true);
+        }
         ArrayList<Device> devices = controller.getDevices();
-        ArrayList<Source> sources = controller.getSources();
         Buffer buffer = controller.getBuffer();
-//
+
         for (SpecialEvent x: events) {
             System.out.println(x.getEventTypeOrdinal() + ":" + x.getEventTime());
         }
@@ -79,17 +81,7 @@ public class ButtonController {
         for (Label x: sourceLabels) {
             x.setVisible(false);
         }
-
-
-
-//        for (Label x: deviceLabels) {
-//            x.setVisible(false);
-//        }
-//
-//        for (Label x: bufferLabels) {
-//            x.setVisible(false);
-//        }
-
+        System.out.println(event.getEventTypeOrdinal());
         Label bufferLabel;
         Label deviceLabel;
 
@@ -112,23 +104,27 @@ public class ButtonController {
             }
         }
 
+
         timeField.setText(String.valueOf(controller.getCurrentTime()));
         tasksCompleted.setText(controller.totalTasksRequired + "/" + statController.getTotalTasksProcessed());
-        int tasksGen = 0;
         switch (event.getEventTypeOrdinal()) {
-            case 0:
-                tasksGen++;
+            case 0 -> {
                 Label sourceLabel = sourceLabels[event.getAssignedDevice()];
                 sourceLabel.setText("Сгенерировал");
                 sourceLabel.setVisible(true);
-                break;
-            case 1:
-                break;
-            case 2:
+            }
+            case 1 -> {
+                bufferLabel = bufferLabels[(int) buffer.getCancelPosition()];
+                if (buffer.isFlagCancel()) {
+                    bufferLabel.setText("Отказ");
+                    bufferLabel.setVisible(true);
+                }
+            }
+            case 2 -> {
                 deviceLabel = deviceLabels[event.getAssignedDevice()];
                 deviceLabel.setVisible(true);
                 deviceLabel.setText("Освободился");
-                break;
+            }
         }
     }
 
