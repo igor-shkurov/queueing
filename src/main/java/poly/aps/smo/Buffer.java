@@ -10,7 +10,7 @@ public class Buffer {
     private final StatController statistics;
     private final ArrayList<Request> requests;
     private long fetchPosition = 0;
-    private long placePosition = 0;
+    private long placePosition = -1;
     private long cancelPosition = 0;
     private boolean flagCancel;
     private long size = 0; // occupied with requests
@@ -72,12 +72,12 @@ public class Buffer {
         }
         else {
             flagCancel = false;
-            while (posBusy(placePosition)) {;
+            do {
                 placePosition++;
                 if (placePosition == capacity) {
                     placePosition = 0;
                 }
-            }
+            } while(posBusy(placePosition));
             requests.set((int) placePosition, request);
             size = requests.stream().filter(Objects::nonNull).count();
         }
