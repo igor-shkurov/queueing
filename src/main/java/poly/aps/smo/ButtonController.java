@@ -50,12 +50,6 @@ public class ButtonController {
         Controller controller = new Controller(alpha, beta, lambda, bufferSize, requestCount, sourceCount, deviceCount);
     }
 
-    Object search(TreeSet treeset, Object key) {
-        Object ceil  = treeset.ceiling(key); // least elt >= key
-        Object floor = treeset.floor(key);   // highest elt <= key
-        return ceil == floor? ceil : null;
-    }
-
     @FXML
     public void doStep(ActionEvent actionEvent) {
         Label[] sourceLabels = {s1, s2, s3, s4, s5, s6, s7, s8, s9, s10};
@@ -73,15 +67,10 @@ public class ButtonController {
         ArrayList<Device> devices = controller.getDevices();
         Buffer buffer = controller.getBuffer();
 
-        for (SpecialEvent x: events) {
-            System.out.println(x.getEventTypeOrdinal() + ":" + x.getEventTime());
-        }
-        System.out.println("-------");
-
         for (Label x: sourceLabels) {
             x.setVisible(false);
         }
-        System.out.println(event.getEventTypeOrdinal());
+
         Label bufferLabel;
         Label deviceLabel;
 
@@ -90,7 +79,6 @@ public class ButtonController {
                 deviceLabel = deviceLabels[d.getDeviceNumber()];
                 deviceLabel.setVisible(true);
                 deviceLabel.setText("Занят");
-                System.out.println(d.getCurrentRequest());
             }
         }
 
@@ -103,7 +91,6 @@ public class ButtonController {
                 bufferLabels[i].setVisible(false);
             }
         }
-
 
         timeField.setText(String.valueOf(controller.getCurrentTime()));
         tasksCompleted.setText(controller.totalTasksRequired + "/" + statController.getTotalTasksProcessed());

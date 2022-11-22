@@ -38,7 +38,6 @@ public class StatController {
         double allProcessTime = 0;
         double allBufferedTime = 0;
         for (StatSource source: sourcesStats) {
-            System.out.println(source.getTasksTotalTime());
             allProcessTime += source.getTasksTotalTime();
             allBufferedTime += source.getBufferedTime();
         }
