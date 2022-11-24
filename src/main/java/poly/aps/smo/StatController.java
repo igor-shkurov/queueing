@@ -93,7 +93,6 @@ public class StatController {
     public void taskRejected(int source, double workingTime) {
         taskFinished(source, -1, workingTime, 0);
         sourcesStats.get(source).addRejectedTask();
-        totalTasksProcessed++;
     }
 
     public int getRejectedTasks() {

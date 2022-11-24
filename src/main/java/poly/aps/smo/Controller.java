@@ -32,6 +32,7 @@ public class Controller {
         for (int i = 0; i < sourceCount; i++) {
             SpecialEvent event = new SpecialEvent(sources.get(i).nextRequestGenerationTime(), SpecialEvent.EventType.GenerateRequest, i);
             eventSet.add(event);
+            statistics.taskCreated(i);
         }
     }
 
@@ -92,12 +93,12 @@ public class Controller {
         switch (specialEvent.getEventTypeOrdinal()) {
             case 0:
                 if (statistics.getTotalTasksCreated() < totalTasksRequired) {
-                    buffer.addRequest(sources.get(deviceId).generateNewRequest(currentTime));
                     eventSet.add(new SpecialEvent(currentTime + sources.get(deviceId).nextRequestGenerationTime(),
                                                     SpecialEvent.EventType.GenerateRequest, deviceId));
-                    eventSet.add(new SpecialEvent(currentTime, SpecialEvent.EventType.RequestUnbuffered, -1));
                     statistics.taskCreated(deviceId);
                 }
+                buffer.addRequest(sources.get(deviceId).generateNewRequest(currentTime));
+                eventSet.add(new SpecialEvent(currentTime, SpecialEvent.EventType.RequestUnbuffered, -1));
                 break;
             case 1:
                 if (devices.stream().allMatch(Device::isBusy)) {

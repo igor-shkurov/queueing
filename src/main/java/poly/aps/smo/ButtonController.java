@@ -36,18 +36,19 @@ public class ButtonController {
     private Label b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
     @FXML
     private Rectangle br1, br2, br3, br4, br5, br6, br7, br8, br9, br10;
+    int sourceCount, deviceCount, requestCount, bufferSize, alpha, beta, lambda;
+
 
     @FXML
     public void applySettings(ActionEvent actionEvent) {
-        int sourceCount = Integer.parseInt(sourceText.getText());
-        int deviceCount = Integer.parseInt(deviceText.getText());
-        int requestCount = Integer.parseInt(requestText.getText());
-        int bufferSize = Integer.parseInt(buffersizeText.getText());
-        int alpha = Integer.parseInt(alphaText.getText());
-        int beta = Integer.parseInt(betaText.getText());
-        int lambda = Integer.parseInt(lambdaText.getText());
-
-        Controller controller = new Controller(alpha, beta, lambda, bufferSize, requestCount, sourceCount, deviceCount);
+        sourceCount = Integer.parseInt(sourceText.getText());
+        deviceCount = Integer.parseInt(deviceText.getText());
+        requestCount = Integer.parseInt(requestText.getText());
+        bufferSize = Integer.parseInt(buffersizeText.getText());
+        alpha = Integer.parseInt(alphaText.getText());
+        beta = Integer.parseInt(betaText.getText());
+        lambda = Integer.parseInt(lambdaText.getText());
+        startStepping.setDisable(false);
     }
 
     @FXML
@@ -61,11 +62,16 @@ public class ButtonController {
         SpecialEvent event = controller.getFirstEvent();
 
         TreeSet<SpecialEvent> events = controller.goToNextState();
-        if (events.isEmpty() || statController.getTotalTasksProcessed() == controller.totalTasksRequired) {
+        if (events.isEmpty()) {
             doStep.setDisable(true);
         }
         ArrayList<Device> devices = controller.getDevices();
         Buffer buffer = controller.getBuffer();
+
+        for (SpecialEvent x: events) {
+            System.out.println(x.getEventTypeOrdinal());
+        }
+        System.out.println("------");
 
         for (Label x: sourceLabels) {
             x.setVisible(false);
@@ -93,7 +99,7 @@ public class ButtonController {
         }
 
         timeField.setText(String.valueOf(controller.getCurrentTime()));
-        tasksCompleted.setText(controller.totalTasksRequired + "/" + statController.getTotalTasksProcessed());
+        tasksCompleted.setText(statController.getTotalTasksProcessed() + "/" + controller.totalTasksRequired);
         switch (event.getEventTypeOrdinal()) {
             case 0 -> {
                 Label sourceLabel = sourceLabels[event.getAssignedDevice()];
@@ -117,13 +123,28 @@ public class ButtonController {
 
     @FXML
     public void startStepping(ActionEvent actionEvent) {
+        Label[] sourceLabels = {s1, s2, s3, s4, s5, s6, s7, s8, s9, s10};
+        Label[] deviceLabels = {d1, d2, d3, d4, d5, d6, d7, d8, d9, d10};
+        Label[] bufferLabels = {b1, b2, b3, b4, b5, b6, b7, b8, b9, b10};
         Rectangle[] sourceRectangles = {rs1, rs2, rs3, rs4, rs5, rs6, rs7, rs8, rs9, rs10};
         Rectangle[] deviceRectangles = {rd1, rd2, rd3, rd4, rd5, rd6, rd7, rd8, rd9, rd10};
         Rectangle[] bufferRectangles = {br1, br2, br3, br4, br5, br6, br7, br8, br9, br10};
-        Controller controller = Controller.instance;
+        for (int i = 0; i < 10; i++) {
+            sourceRectangles[i].setVisible(false);
+            sourceLabels[i].setVisible(false);
+        }
+        for (int i = 0; i < 10; i++) {
+            deviceRectangles[i].setVisible(false);
+            deviceLabels[i].setVisible(false);
+        }
+        for (int i = 0; i < 10; i++) {
+            bufferRectangles[i].setVisible(false);
+            bufferLabels[i].setVisible(false);
+        }
+        Controller controller = new Controller(alpha, beta, lambda, bufferSize, requestCount, sourceCount, deviceCount);
         StatController statController = StatController.instance;
         timeField.setText(String.valueOf(controller.getCurrentTime()));
-        startStepping.setDisable(true);
+//        startStepping.setDisable(true);
         doStep.setDisable(false);
         for (int i = 0; i < statController.getSourceCount(); i++) {
             sourceRectangles[i].setVisible(true);
