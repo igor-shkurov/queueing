@@ -7,7 +7,7 @@ public class Controller {
     public static Controller instance;
     private final StatController statistics;
     private double currentTime = 0.0;
-    int totalTasksRequired;
+    private final int totalTasksRequired;
     private final Buffer buffer;
     private final int sourceCount;
     private final int deviceCount;
@@ -38,6 +38,10 @@ public class Controller {
 
     public double getCurrentTime() {
         return currentTime;
+    }
+
+    public int getTotalTasksRequired() {
+        return totalTasksRequired;
     }
 
     public Buffer getBuffer() {

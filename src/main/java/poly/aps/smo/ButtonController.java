@@ -99,7 +99,7 @@ public class ButtonController {
         }
 
         timeField.setText(String.valueOf(controller.getCurrentTime()));
-        tasksCompleted.setText(statController.getTotalTasksProcessed() + "/" + controller.totalTasksRequired);
+        tasksCompleted.setText(statController.getTotalTasksProcessed() + "/" + controller.getTotalTasksRequired());
         switch (event.getEventTypeOrdinal()) {
             case 0 -> {
                 Label sourceLabel = sourceLabels[event.getAssignedDevice()];
@@ -144,7 +144,6 @@ public class ButtonController {
         Controller controller = new Controller(alpha, beta, lambda, bufferSize, requestCount, sourceCount, deviceCount);
         StatController statController = StatController.instance;
         timeField.setText(String.valueOf(controller.getCurrentTime()));
-//        startStepping.setDisable(true);
         doStep.setDisable(false);
         for (int i = 0; i < statController.getSourceCount(); i++) {
             sourceRectangles[i].setVisible(true);
@@ -158,7 +157,19 @@ public class ButtonController {
     }
 
     @FXML
-    public void launchAutoMode(ActionEvent actionEvent) {
+    public void launchAuto(ActionEvent actionEvent) {
+        Controller controller = new Controller(alpha, beta, lambda, bufferSize, requestCount, sourceCount, deviceCount);
+        try {
+            controller.executeAuto();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        StatController.instance.sourceStatTable();
+        StatController.instance.deviceStatTable();
+    }
+
+    @FXML
+    public void drawPlots(ActionEvent actionEvent) {
         int bufferSize = 3;
         int sourceCount;
         int deviceCount = 3;

@@ -1,11 +1,18 @@
 package poly.aps.smo;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class StatController {
     public static StatController instance;
     private long totalTasksCreated;
-    public long totalTasksProcessed;
+    private long totalTasksProcessed;
     private int sourceCount;
     private int deviceCount;
     private final ArrayList<StatSource> sourcesStats;
@@ -109,5 +116,57 @@ public class StatController {
 
     public void setDeviceCount(int deviceCount) {
         this.deviceCount = deviceCount;
+    }
+
+    public void sourceStatTable() {
+        int i = 1;
+        DecimalFormat df = new DecimalFormat("#.###");
+        Path file = Paths.get("source_stats.txt");
+        List<String> lines = new ArrayList<>();
+        lines.add("Источник;Количество заявок;Вероятность отказа;Сред. время в системе;Время в БП;Время обслуживания;Д(БП);Д(Обсл.)");
+        for (StatSource ss: sourcesStats) {
+            String str = String.valueOf(i) +
+                    ';' +
+                    ss.getGeneratedTasksCount() +
+                    ';' +
+                    df.format((double) ss.getRejectedTasksCount() / ss.getGeneratedTasksCount()) +
+                    ';' +
+                    df.format((ss.getTasksTotalTime() + ss.getBufferedTime())) +
+                    ';' +
+                    df.format(ss.getBufferedTime()) +
+                    ';' +
+                    df.format(ss.getTasksTotalTime())+
+                    ';' +
+                    df.format(ss.getBufferedTimeDispersion()) +
+                    ';' +
+                    df.format(ss.getTotalTimeDispersion());
+            i++;
+            lines.add(str);
+        }
+        try {
+            Files.write(file, lines, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deviceStatTable() {
+        int i = 1;
+        DecimalFormat df = new DecimalFormat("#.###");
+        Path file = Paths.get("device_stats.txt");
+        List<String> lines = new ArrayList<>();
+        lines.add("Прибор;Коэффициент использования");
+        for (StatDevice sd: devicesStats) {
+            String str = String.valueOf(i) +
+                    ';' +
+                    df.format(sd.getTotalWorkingTime() / Controller.instance.getCurrentTime());
+            i++;
+            lines.add(str);
+        }
+        try {
+            Files.write(file, lines, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
