@@ -48,7 +48,7 @@ public class StatController {
             allProcessTime += source.getTasksTotalTime();
             allBufferedTime += source.getBufferedTime();
         }
-        return allBufferedTime / sourceCount + allProcessTime / sourceCount;
+        return (allBufferedTime + allProcessTime) / totalTasksCreated;
     }
 
     public double getAverageWorkingTime() {
@@ -131,11 +131,11 @@ public class StatController {
                     ';' +
                     df.format((double) ss.getRejectedTasksCount() / ss.getGeneratedTasksCount()) +
                     ';' +
-                    df.format((ss.getTasksTotalTime() + ss.getBufferedTime())) +
+                    df.format((ss.getTasksTotalTime() + ss.getBufferedTime()) / ss.getGeneratedTasksCount()) +
                     ';' +
-                    df.format(ss.getBufferedTime()) +
+                    df.format(ss.getBufferedTime() / ss.getGeneratedTasksCount()) +
                     ';' +
-                    df.format(ss.getTasksTotalTime())+
+                    df.format(ss.getTasksTotalTime() / ss.getGeneratedTasksCount())+
                     ';' +
                     df.format(ss.getBufferedTimeDispersion()) +
                     ';' +

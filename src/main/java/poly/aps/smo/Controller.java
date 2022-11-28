@@ -22,7 +22,7 @@ public class Controller {
         }
     }
 
-    private void initDevices(long lambda) {
+    private void initDevices(double lambda) {
         for (int i = 0; i < deviceCount; i++) {
             devices.add(new Device(i, lambda));
         }
@@ -56,7 +56,7 @@ public class Controller {
         return sources;
     }
 
-    public Controller(int alpha, int beta, int lambda, int bufferSize, int totalTasksRequired, int sourceCount, int deviceCount) {
+    public Controller(int alpha, int beta, double lambda, int bufferSize, int totalTasksRequired, int sourceCount, int deviceCount) {
         this.sourceCount = sourceCount;
         this.deviceCount = deviceCount;
         this.totalTasksRequired = totalTasksRequired;

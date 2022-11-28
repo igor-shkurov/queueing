@@ -8,9 +8,9 @@ public class Device implements Comparable<Device> {
     private final int deviceNumber;
     private Request currentRequest;
     private final Random random = new Random();
-    private final long lambda;
+    private final double lambda;
 
-    public Device(int deviceNumber, long lambda) {
+    public Device(int deviceNumber, double lambda) {
         this.deviceNumber = deviceNumber;
         this.lambda = lambda;
     };

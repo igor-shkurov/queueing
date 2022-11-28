@@ -42,7 +42,7 @@
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Устройств" />
-                           <TextField fx:id="deviceText" onAction="#applySettings" text="1" />
+                           <TextField fx:id="deviceText" onAction="#applySettings" text="3" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
@@ -60,19 +60,19 @@
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="α" />
-                           <TextField fx:id="alphaText" onAction="#applySettings" text="1" />
+                           <TextField fx:id="alphaText" onAction="#applySettings" text="0" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="β" />
-                           <TextField fx:id="betaText" onAction="#applySettings" text="5" />
+                           <TextField fx:id="betaText" onAction="#applySettings" text="20" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
                            <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="λ" />
-                           <TextField fx:id="lambdaText" onAction="#applySettings" text="3" />
+                           <TextField fx:id="lambdaText" onAction="#applySettings" text="0.1" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="36.0" prefWidth="846.0">

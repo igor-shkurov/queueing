@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.TreeSet;
 
 public class ButtonController {
@@ -23,7 +24,7 @@ public class ButtonController {
     @FXML
     public Label cancelNum;
     @FXML
-    private Button startStepping, doStep;
+    private Button startStepping, doStep, btnAuto;
     @FXML
     private Label s1, s2, s3, s4, s5, s6, s7, s8, s9, s10;
     @FXML
@@ -36,7 +37,8 @@ public class ButtonController {
     private Label b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
     @FXML
     private Rectangle br1, br2, br3, br4, br5, br6, br7, br8, br9, br10;
-    int sourceCount, deviceCount, requestCount, bufferSize, alpha, beta, lambda;
+    int sourceCount, deviceCount, requestCount, bufferSize, alpha, beta;
+    double lambda;
 
 
     @FXML
@@ -47,7 +49,7 @@ public class ButtonController {
         bufferSize = Integer.parseInt(buffersizeText.getText());
         alpha = Integer.parseInt(alphaText.getText());
         beta = Integer.parseInt(betaText.getText());
-        lambda = Integer.parseInt(lambdaText.getText());
+        lambda = Double.parseDouble(lambdaText.getText());
         startStepping.setDisable(false);
     }
 
@@ -67,11 +69,6 @@ public class ButtonController {
         }
         ArrayList<Device> devices = controller.getDevices();
         Buffer buffer = controller.getBuffer();
-
-        for (SpecialEvent x: events) {
-            System.out.println(x.getEventTypeOrdinal());
-        }
-        System.out.println("------");
 
         for (Label x: sourceLabels) {
             x.setVisible(false);
@@ -97,6 +94,13 @@ public class ButtonController {
                 bufferLabels[i].setVisible(false);
             }
         }
+
+//        Random random = new Random();
+//        double sum = 0.0;
+//        for (int i = 0; i < 1000; i++) {
+//            sum += Math.log(1 - random.nextDouble()) / (- lambda);
+//        }
+//        System.out.println(sum / 1000);
 
         timeField.setText(String.valueOf(controller.getCurrentTime()));
         tasksCompleted.setText(statController.getTotalTasksProcessed() + "/" + controller.getTotalTasksRequired());
@@ -170,6 +174,18 @@ public class ButtonController {
 
     @FXML
     public void drawPlots(ActionEvent actionEvent) {
+        sourceCancel.getData().clear();
+        sourceAverage.getData().clear();
+        sourceBusiness.getData().clear();
+
+        deviceCancel.getData().clear();
+        deviceAverage.getData().clear();
+        deviceBusiness.getData().clear();
+
+        bufferCancel.getData().clear();
+        bufferAverage.getData().clear();
+        bufferBusiness.getData().clear();
+
         int bufferSize = 3;
         int sourceCount;
         int deviceCount = 3;
@@ -179,7 +195,7 @@ public class ButtonController {
         XYChart.Series<Number, Number> seriesSourceBusiness = new XYChart.Series<>();
         for (sourceCount = 1; sourceCount < 80; sourceCount++) {
             try {
-                Controller controller = new Controller(0, 1, 2, bufferSize, 1000, sourceCount, deviceCount);
+                Controller controller = new Controller(alpha, beta, lambda, bufferSize, requestCount, sourceCount, deviceCount);
                 controller.executeAuto();
                 StatController statController = StatController.instance;
 
@@ -203,7 +219,7 @@ public class ButtonController {
         XYChart.Series<Number, Number> seriesDeviceBusiness = new XYChart.Series<>();
         for (deviceCount = 1; deviceCount < 80; deviceCount++) {
             try {
-                Controller controller = new Controller(0, 1, 2, bufferSize, 1000, sourceCount, deviceCount);
+                Controller controller = new Controller(alpha, beta, lambda, bufferSize, requestCount, sourceCount, deviceCount);
                 controller.executeAuto();
                 StatController statController = StatController.instance;
 
@@ -227,7 +243,7 @@ public class ButtonController {
         XYChart.Series<Number, Number> seriesBufferBusiness = new XYChart.Series<>();
         for (bufferSize = 1; bufferSize < 80; bufferSize++) {
             try {
-                Controller controller = new Controller(0, 1, 2, bufferSize, 1000, sourceCount, deviceCount);
+                Controller controller = new Controller(alpha, beta, lambda, bufferSize, requestCount, sourceCount, deviceCount);
                 controller.executeAuto();
                 StatController statController = StatController.instance;
 
