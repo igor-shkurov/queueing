@@ -24,7 +24,7 @@ public class ButtonController {
     @FXML
     public Label cancelNum;
     @FXML
-    private Button startStepping, doStep, btnAuto;
+    private Button startStepping, doStep, btnAuto, buttonApply, buttonTable, buttonPlotting;
     @FXML
     private Label s1, s2, s3, s4, s5, s6, s7, s8, s9, s10;
     @FXML
@@ -37,12 +37,14 @@ public class ButtonController {
     private Label b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
     @FXML
     private Rectangle br1, br2, br3, br4, br5, br6, br7, br8, br9, br10;
-    int sourceCount, deviceCount, requestCount, bufferSize, alpha, beta;
-    double lambda;
-
+    private int sourceCount, deviceCount, requestCount, bufferSize, alpha, beta;
+    private double lambda;
 
     @FXML
     public void applySettings(ActionEvent actionEvent) {
+        buttonTable.setDisable(false);
+        buttonPlotting.setDisable(false);
+        buttonApply.setText("Reapply");
         sourceCount = Integer.parseInt(sourceText.getText());
         deviceCount = Integer.parseInt(deviceText.getText());
         requestCount = Integer.parseInt(requestText.getText());
@@ -81,52 +83,47 @@ public class ButtonController {
             if (d.isBusy()) {
                 deviceLabel = deviceLabels[d.getDeviceNumber()];
                 deviceLabel.setVisible(true);
-                deviceLabel.setText("Занят");
+                deviceLabel.setText("Occupied");
             }
         }
 
         for (int i = 0; i < buffer.getCapacity(); i++) {
             if (buffer.posBusy(i)) {
                 bufferLabels[i].setVisible(true);
-                bufferLabels[i].setText("Занят");
+                bufferLabels[i].setText("Occupied");
             }
             else {
                 bufferLabels[i].setVisible(false);
             }
         }
 
-//        Random random = new Random();
-//        double sum = 0.0;
-//        for (int i = 0; i < 1000; i++) {
-//            sum += Math.log(1 - random.nextDouble()) / (- lambda);
-//        }
-//        System.out.println(sum / 1000);
-
         timeField.setText(String.valueOf(controller.getCurrentTime()));
         tasksCompleted.setText(statController.getTotalTasksProcessed() + "/" + controller.getTotalTasksRequired());
         switch (event.getEventTypeOrdinal()) {
             case 0 -> {
                 Label sourceLabel = sourceLabels[event.getAssignedDevice()];
-                sourceLabel.setText("Сгенерировал");
+                sourceLabel.setText("Generated a request");
                 sourceLabel.setVisible(true);
             }
             case 1 -> {
                 bufferLabel = bufferLabels[(int) buffer.getCancelPosition()];
                 if (buffer.isFlagCancel()) {
-                    bufferLabel.setText("Отказ");
+                    bufferLabel.setText("Rejected");
                     bufferLabel.setVisible(true);
                 }
             }
             case 2 -> {
                 deviceLabel = deviceLabels[event.getAssignedDevice()];
                 deviceLabel.setVisible(true);
-                deviceLabel.setText("Освободился");
+                deviceLabel.setText("Freed up");
             }
         }
     }
 
     @FXML
-    public void startStepping(ActionEvent actionEvent) {
+    public void startStepping(ActionEvent actionEvent) { // @todo: REMOVE DUPLICATE CODE!!!
+        startStepping.setText("Relaunch");
+
         Label[] sourceLabels = {s1, s2, s3, s4, s5, s6, s7, s8, s9, s10};
         Label[] deviceLabels = {d1, d2, d3, d4, d5, d6, d7, d8, d9, d10};
         Label[] bufferLabels = {b1, b2, b3, b4, b5, b6, b7, b8, b9, b10};
@@ -145,6 +142,7 @@ public class ButtonController {
             bufferRectangles[i].setVisible(false);
             bufferLabels[i].setVisible(false);
         }
+
         Controller controller = new Controller(alpha, beta, lambda, bufferSize, requestCount, sourceCount, deviceCount);
         StatController statController = StatController.instance;
         timeField.setText(String.valueOf(controller.getCurrentTime()));
@@ -160,8 +158,36 @@ public class ButtonController {
         }
     }
 
+    private void cleanStepping() { // @todo: REMOVE DUPLICATE CODE!!!
+        Label[] sourceLabels = {s1, s2, s3, s4, s5, s6, s7, s8, s9, s10};
+        Label[] deviceLabels = {d1, d2, d3, d4, d5, d6, d7, d8, d9, d10};
+        Label[] bufferLabels = {b1, b2, b3, b4, b5, b6, b7, b8, b9, b10};
+        Rectangle[] sourceRectangles = {rs1, rs2, rs3, rs4, rs5, rs6, rs7, rs8, rs9, rs10};
+        Rectangle[] deviceRectangles = {rd1, rd2, rd3, rd4, rd5, rd6, rd7, rd8, rd9, rd10};
+        Rectangle[] bufferRectangles = {br1, br2, br3, br4, br5, br6, br7, br8, br9, br10};
+        for (int i = 0; i < 10; i++) {
+            sourceRectangles[i].setVisible(false);
+            sourceLabels[i].setVisible(false);
+        }
+        for (int i = 0; i < 10; i++) {
+            deviceRectangles[i].setVisible(false);
+            deviceLabels[i].setVisible(false);
+        }
+        for (int i = 0; i < 10; i++) {
+            bufferRectangles[i].setVisible(false);
+            bufferLabels[i].setVisible(false);
+        }
+
+        timeField.setText("");
+        tasksCompleted.setText("");
+    }
+
     @FXML
     public void launchAuto(ActionEvent actionEvent) {
+        cleanStepping();
+        doStep.setDisable(true);
+        startStepping.setText("Relaunch");
+
         Controller controller = new Controller(alpha, beta, lambda, bufferSize, requestCount, sourceCount, deviceCount);
         try {
             controller.executeAuto();
@@ -174,6 +200,10 @@ public class ButtonController {
 
     @FXML
     public void drawPlots(ActionEvent actionEvent) {
+        cleanStepping();
+        doStep.setDisable(true);
+        startStepping.setText("Relaunch");
+
         sourceCancel.getData().clear();
         sourceAverage.getData().clear();
         sourceBusiness.getData().clear();

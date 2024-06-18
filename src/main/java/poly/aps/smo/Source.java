@@ -5,9 +5,9 @@ import java.util.Random;
 public class Source {
     private final int deviceNumber;
     private long requestGenerated = 0L;
-    private Random random = new Random();
-    private long alpha;
-    private long beta;
+    private final Random random = new Random();
+    private final long alpha;
+    private final long beta;
 
     public Source(int deviceNumber, long alpha, long beta) {
         this.deviceNumber = deviceNumber;

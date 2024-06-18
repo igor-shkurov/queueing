@@ -1,9 +1,5 @@
 package poly.aps.smo;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.Pane;
-
-import java.io.IOException;
 import java.util.*;
 
 public class Buffer {

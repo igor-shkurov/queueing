@@ -116,6 +116,10 @@ public class Controller {
                 }
                 currentDevice = devices.get(currentDeviceNum);
                 Request request = buffer.getRequest();
+                currentDeviceNum++;
+                if (currentDeviceNum == deviceCount) {
+                    currentDeviceNum = 0;
+                }
                 eventSet.add(new SpecialEvent(currentTime + currentDevice.setNextRequest(request, currentTime),
                         SpecialEvent.EventType.RequestCompleted, currentDevice.getDeviceNumber()));
                 break;

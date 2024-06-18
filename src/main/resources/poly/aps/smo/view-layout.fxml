@@ -22,38 +22,38 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-   <Label opacity="0.49" prefHeight="0.0" prefWidth="384.0" text="Система Массового Обслуживания">
+   <Label opacity="0.49" prefHeight="0.0" prefWidth="384.0" text="Queueing system">
       <font>
          <Font size="24.0" />
       </font>
    </Label>
    <TabPane prefHeight="915.0" prefWidth="846.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE">
      <tabs>
-       <Tab text="Настройки">
+       <Tab text="Settings">
             <content>
                <VBox prefHeight="200.0" prefWidth="100.0">
                   <children>
                      <HBox alignment="TOP_CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
-                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Источников" />
+                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="N of sources" />
                            <TextField fx:id="sourceText" onAction="#applySettings" text="10" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
-                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Устройств" />
+                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="N of devices" />
                            <TextField fx:id="deviceText" onAction="#applySettings" text="3" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="846.0">
                         <children>
-                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Заявок" />
+                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="N of requests" />
                            <TextField fx:id="requestText" onAction="#applySettings" text="2000" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" layoutX="10.0" layoutY="36.0" prefHeight="10.0" prefWidth="846.0">
                         <children>
-                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Мест в буфере" />
+                           <Label alignment="CENTER" prefHeight="26.0" prefWidth="143.0" text="Buffer capacity" />
                            <TextField fx:id="buffersizeText" onAction="#applySettings" text="3" />
                         </children>
                      </HBox>
@@ -77,13 +77,13 @@
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="36.0" prefWidth="846.0">
                         <children>
-                           <Button fx:id="buttonApply" mnemonicParsing="false" onAction="#applySettings" text="Применить" />
+                           <Button fx:id="buttonApply" mnemonicParsing="false" onAction="#applySettings" text="Apply" />
                         </children>
                      </HBox>
                   </children>
                </VBox>
             </content></Tab>
-       <Tab text="Пошаговый режим">
+       <Tab text="Step by step mode">
             <content>
                <VBox>
                   <children>
@@ -91,7 +91,7 @@
                         <children>
                            <VBox prefHeight="724.0" prefWidth="359.0">
                               <children>
-                                 <Label text="Источники:" />
+                                 <Label text="Sources:" />
                                  <StackPane>
                                     <children>
                                        <Rectangle fx:id="rs1" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
@@ -156,7 +156,7 @@
                            </VBox>
                            <VBox prefHeight="724.0" prefWidth="377.0">
                               <children>
-                                 <Label text="Буферные места:" />
+                                 <Label text="Buffer:" />
                                  <StackPane>
                                     <children>
                                        <Rectangle fx:id="br1" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
@@ -221,7 +221,7 @@
                            </VBox>
                            <VBox prefHeight="724.0" prefWidth="373.0">
                               <children>
-                                 <Label alignment="TOP_LEFT" text="Устройства:" />
+                                 <Label alignment="TOP_LEFT" text="Devices:" />
                                  <StackPane>
                                     <children>
                                        <Rectangle fx:id="rd1" arcHeight="5.0" arcWidth="5.0" fill="#8c9eae" height="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="220.0" />
@@ -288,18 +288,18 @@
                      </HBox>
                      <AnchorPane prefHeight="54.0" prefWidth="1108.0">
                         <children>
-                           <Button fx:id="doStep" disable="true" layoutY="1.0" mnemonicParsing="false" onAction="#doStep" prefHeight="45.0" prefWidth="133.0" text="Сделать шаг" />
-                           <Label layoutX="394.0" layoutY="15.0" text="Текущее время:" />
+                           <Button fx:id="doStep" disable="true" layoutY="1.0" mnemonicParsing="false" onAction="#doStep" prefHeight="45.0" prefWidth="133.0" text="Make a step" />
+                           <Label layoutX="394.0" layoutY="15.0" text="Current time:" />
                            <Label fx:id="timeField" layoutX="494.0" layoutY="15.0" prefHeight="17.0" prefWidth="69.0" text="null" />
-                           <Button fx:id="startStepping" disable="true" layoutX="1018.0" layoutY="1.0" mnemonicParsing="false" onAction="#startStepping" prefHeight="45.0" prefWidth="87.0" text="Запуск" />
-                           <Label layoutX="635.0" layoutY="15.0" text="Выполнено:" />
+                           <Button fx:id="startStepping" disable="true" layoutX="1018.0" layoutY="1.0" mnemonicParsing="false" onAction="#startStepping" prefHeight="45.0" prefWidth="87.0" text="Launch" />
+                           <Label layoutX="635.0" layoutY="15.0" text="Completed:" />
                            <Label fx:id="tasksCompleted" layoutX="711.0" layoutY="15.0" prefHeight="17.0" prefWidth="75.0" text="null" />
                         </children>
                      </AnchorPane>
                   </children>
                </VBox>
             </content></Tab>
-         <Tab text="Автоматический режим">
+         <Tab text="Auto mode">
             <content>
                <VBox prefHeight="511.0" prefWidth="1108.0">
                   <children>
@@ -315,7 +315,7 @@
                          <RowConstraints maxHeight="220.0" minHeight="10.0" prefHeight="227.0" vgrow="SOMETIMES" />
                        </rowConstraints>
                         <children>
-                           <LineChart fx:id="sourceCancel" prefHeight="137.0" prefWidth="282.0" title="Вероятность отказа/источники">
+                           <LineChart fx:id="sourceCancel" prefHeight="137.0" prefWidth="282.0" title="Probability of rejected request/N of sources">
                              <xAxis>
                                <NumberAxis side="BOTTOM" />
                              </xAxis>
@@ -323,7 +323,7 @@
                                <NumberAxis side="LEFT" />
                              </yAxis>
                            </LineChart>
-                           <LineChart fx:id="sourceAverage" prefHeight="26.0" prefWidth="282.0" title="Ср. время в системе/источники" GridPane.columnIndex="1">
+                           <LineChart fx:id="sourceAverage" prefHeight="26.0" prefWidth="282.0" title="Avg. time in system/N of sources" GridPane.columnIndex="1">
                              <xAxis>
                                <NumberAxis side="BOTTOM" />
                              </xAxis>
@@ -331,7 +331,7 @@
                                <NumberAxis prefHeight="11.0" prefWidth="27.0" side="LEFT" />
                              </yAxis>
                            </LineChart>
-                           <LineChart fx:id="sourceBusiness" title="Загруженность приборов/источники" GridPane.columnIndex="2">
+                           <LineChart fx:id="sourceBusiness" title="Business of devices/N of sources" GridPane.columnIndex="2">
                              <xAxis>
                                <NumberAxis side="BOTTOM" />
                              </xAxis>
@@ -339,7 +339,7 @@
                                <NumberAxis side="LEFT" />
                              </yAxis>
                            </LineChart>
-                           <LineChart fx:id="deviceCancel" prefHeight="222.0" prefWidth="370.0" title="Вероятность отказа/приборы" GridPane.rowIndex="1">
+                           <LineChart fx:id="deviceCancel" prefHeight="222.0" prefWidth="370.0" title="Probability of rejected request/N of devices" GridPane.rowIndex="1">
                              <xAxis>
                                <NumberAxis side="BOTTOM" />
                              </xAxis>
@@ -347,7 +347,7 @@
                                <NumberAxis side="LEFT" />
                              </yAxis>
                            </LineChart>
-                           <LineChart fx:id="deviceAverage" prefHeight="96.0" prefWidth="342.0" title="Ср. время в системе/приборы" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <LineChart fx:id="deviceAverage" prefHeight="96.0" prefWidth="342.0" title="Avg. time in system/N of devices" GridPane.columnIndex="1" GridPane.rowIndex="1">
                              <xAxis>
                                <NumberAxis side="BOTTOM" />
                              </xAxis>
@@ -355,7 +355,7 @@
                                <NumberAxis side="LEFT" />
                              </yAxis>
                            </LineChart>
-                           <LineChart fx:id="deviceBusiness" title="Загруженность приборов/приборы" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <LineChart fx:id="deviceBusiness" title="Business of devices/N of devices" GridPane.columnIndex="2" GridPane.rowIndex="1">
                              <xAxis>
                                <NumberAxis side="BOTTOM" />
                              </xAxis>
@@ -363,7 +363,7 @@
                                <NumberAxis side="LEFT" />
                              </yAxis>
                            </LineChart>
-                           <LineChart fx:id="bufferCancel" prefHeight="337.0" prefWidth="358.0" title="Вероятность отказа/буфер" GridPane.rowIndex="2">
+                           <LineChart fx:id="bufferCancel" prefHeight="337.0" prefWidth="358.0" title="Probability of rejected request/Cap. of buffer" GridPane.rowIndex="2">
                              <xAxis>
                                <NumberAxis side="BOTTOM" />
                              </xAxis>
@@ -371,7 +371,7 @@
                                <NumberAxis side="LEFT" />
                              </yAxis>
                            </LineChart>
-                           <LineChart fx:id="bufferAverage" title="Ср. время в системе/буфер" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <LineChart fx:id="bufferAverage" title="Avg. time in system/Cap. of buffer" GridPane.columnIndex="1" GridPane.rowIndex="2">
                              <xAxis>
                                <NumberAxis side="BOTTOM" />
                              </xAxis>
@@ -379,7 +379,7 @@
                                <NumberAxis side="LEFT" />
                              </yAxis>
                            </LineChart>
-                           <LineChart fx:id="bufferBusiness" title="Загруженность приборов/буфер" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <LineChart fx:id="bufferBusiness" title="Business of devices/Cap. of buffer" GridPane.columnIndex="2" GridPane.rowIndex="2">
                              <xAxis>
                                <NumberAxis side="BOTTOM" />
                              </xAxis>
@@ -393,10 +393,10 @@
                         <children>
                            <HBox>
                               <children>
-                                 <Button fx:id="buttonAuto" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#drawPlots" prefHeight="29.0" prefWidth="149.0" text="Построение графиков" />
+                                 <Button fx:id="buttonPlotting" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#drawPlots" prefHeight="29.0" prefWidth="149.0" text="Plotting" disable="true" />
                               </children>
                            </HBox>
-                           <Button fx:id="buttonTable" alignment="TOP_LEFT" layoutX="940.0" mnemonicParsing="false" onAction="#launchAuto" prefHeight="29.0" prefWidth="168.0" text="Запустить с настройками" />
+                           <Button fx:id="buttonTable" alignment="TOP_LEFT" layoutX="940.0" mnemonicParsing="false" onAction="#launchAuto" prefHeight="29.0" prefWidth="168.0" text="Export data into .csv" disable="true" />
                         </children>
                      </AnchorPane>
                   </children>

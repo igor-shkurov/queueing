@@ -121,24 +121,24 @@ public class StatController {
     public void sourceStatTable() {
         int i = 1;
         DecimalFormat df = new DecimalFormat("#.###");
-        Path file = Paths.get("source_stats.txt");
+        Path file = Paths.get("source_stats.csv");
         List<String> lines = new ArrayList<>();
-        lines.add("Источник;Количество заявок;Вероятность отказа;Сред. время в системе;Время в БП;Время обслуживания;Д(БП);Д(Обсл.)");
+        lines.add("Source,N of requests,Probability of rejected request,Avg. time in system,Buffer time,Passage time,Dispersion (buffered time),Dispersion (total time)");
         for (StatSource ss: sourcesStats) {
             String str = String.valueOf(i) +
-                    ';' +
+                    ',' +
                     ss.getGeneratedTasksCount() +
-                    ';' +
+                    ',' +
                     df.format((double) ss.getRejectedTasksCount() / ss.getGeneratedTasksCount()) +
-                    ';' +
+                    ',' +
                     df.format((ss.getTasksTotalTime() + ss.getBufferedTime()) / ss.getGeneratedTasksCount()) +
-                    ';' +
+                    ',' +
                     df.format(ss.getBufferedTime() / ss.getGeneratedTasksCount()) +
-                    ';' +
+                    ',' +
                     df.format(ss.getTasksTotalTime() / ss.getGeneratedTasksCount())+
-                    ';' +
+                    ',' +
                     df.format(ss.getBufferedTimeDispersion()) +
-                    ';' +
+                    ',' +
                     df.format(ss.getTotalTimeDispersion());
             i++;
             lines.add(str);
@@ -153,12 +153,12 @@ public class StatController {
     public void deviceStatTable() {
         int i = 1;
         DecimalFormat df = new DecimalFormat("#.###");
-        Path file = Paths.get("device_stats.txt");
+        Path file = Paths.get("device_stats.csv");
         List<String> lines = new ArrayList<>();
-        lines.add("Прибор;Коэффициент использования");
+        lines.add("Device,Usage Coefficient");
         for (StatDevice sd: devicesStats) {
             String str = String.valueOf(i) +
-                    ';' +
+                    ',' +
                     df.format(sd.getTotalWorkingTime() / Controller.instance.getCurrentTime());
             i++;
             lines.add(str);
