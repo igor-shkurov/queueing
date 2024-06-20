@@ -3,7 +3,8 @@ package poly.aps.smo;
 import java.util.*;
 
 public class Buffer {
-    private final StatController statistics;
+    private StatController statistics;
+    private final boolean isStatControllerEnabled;
     private final ArrayList<Request> requests;
     private long fetchPosition = 0;
     private long placePosition = -1;
@@ -12,10 +13,13 @@ public class Buffer {
     private long size = 0; // occupied with requests
     private final int capacity; // buffer size according to settings
 
-    public Buffer(int capacity) {
+    public Buffer(int capacity, boolean isStatControllerEnabled) {
+        this.isStatControllerEnabled = isStatControllerEnabled;
         this.capacity = capacity;
         requests = new ArrayList<>(capacity);
-        statistics = StatController.instance;
+        if (isStatControllerEnabled) {
+            statistics = StatController.instance;
+        }
         for (int i = 0; i < capacity; i++) {
             requests.add(i, null);
         }
@@ -53,7 +57,7 @@ public class Buffer {
         return requests.stream().allMatch(Objects::isNull);
     }
 
-    public Request findOldest() {
+    private Request findOldest() {
         Optional<Request> opt = requests.stream().min(Comparator.comparing(Request::getStartTime));
         return opt.orElse(null);
     }
@@ -64,7 +68,9 @@ public class Buffer {
             Request canceledRequest = findOldest();
             cancelPosition = requests.indexOf(canceledRequest);
             requests.set((int) cancelPosition, request);
-            statistics.taskRejected(canceledRequest.getSourceNumber(), request.getStartTime() - canceledRequest.getStartTime());
+            if (isStatControllerEnabled) {
+                statistics.taskRejected(canceledRequest.getSourceNumber(), request.getStartTime() - canceledRequest.getStartTime());
+            }
         }
         else {
             flagCancel = false;

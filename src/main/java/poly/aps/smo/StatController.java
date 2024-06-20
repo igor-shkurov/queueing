@@ -42,21 +42,27 @@ public class StatController {
     }
 
     public double getAverageTime() {
-        double allProcessTime = 0;
-        double allBufferedTime = 0;
+        double allTotalTime = 0;
         for (StatSource source: sourcesStats) {
-            allProcessTime += source.getTasksTotalTime();
-            allBufferedTime += source.getBufferedTime();
+            allTotalTime += source.getTasksTotalTime();
         }
-        return (allBufferedTime + allProcessTime) / totalTasksCreated;
+        return allTotalTime / totalTasksCreated;
     }
 
     public double getAverageWorkingTime() {
-        double allBusiness = 0;
+        double allProccessTime = 0;
         for (StatDevice device: devicesStats) {
-            allBusiness += device.getTotalWorkingTime();
+            allProccessTime += device.getTotalWorkingTime();
         }
-        return allBusiness / deviceCount;
+        return allProccessTime / deviceCount;
+    }
+
+    public double getAverageBufferedTime() {
+        double allBufferedTime = 0;
+        for (StatSource source: sourcesStats) {
+            allBufferedTime += source.getBufferedTime();
+        }
+        return allBufferedTime / deviceCount;
     }
 
     public long getTotalTasksCreated() {
@@ -85,16 +91,20 @@ public class StatController {
 
     public void taskCreated(int source) {
         totalTasksCreated++;
+        System.out.println("Created task " + source);
         sourcesStats.get(source).addGeneratedTask();
     }
 
-    public void taskFinished(int source, int processedBy, double consumptedTime, double processedTime) { // workingTime - time on device; processedTime - time in system
+    public void taskFinished(int source, int processedBy, double totalTime, double processedTime) { // processedTime - time on device; totalTime - time in system
         if (processedBy != -1) {
             devicesStats.get(processedBy).addWorkingTime(processedTime);
         }
-        sourcesStats.get(source).addFinishedTaskTime(consumptedTime);
-        sourcesStats.get(source).addBufferedTime(consumptedTime - processedTime);
-        totalTasksProcessed++;
+        else {
+            totalTasksProcessed++;
+        }
+        sourcesStats.get(source).addFinishedTaskTime(totalTime);
+        sourcesStats.get(source).addBufferedTime(totalTime - processedTime);
+        System.out.println(getAverageTime() + " " + getTotalTasksCreated() + " " + getAverageWorkingTime());
     }
 
     public void taskRejected(int source, double workingTime) {

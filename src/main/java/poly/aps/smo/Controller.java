@@ -63,7 +63,7 @@ public class Controller {
         eventSet = new TreeSet<>();
 
         statistics = new StatController(sourceCount, deviceCount);
-        buffer = new Buffer(bufferSize);
+        buffer = new Buffer(bufferSize, true);
         sources = new ArrayList<>(sourceCount);
         devices = new ArrayList<>(deviceCount);
 
@@ -138,7 +138,7 @@ public class Controller {
         }
     }
 
-    public void executeAuto() throws Exception {
+    public void executeAuto() {
         while (!eventSet.isEmpty()) {
             doStep();
         }
