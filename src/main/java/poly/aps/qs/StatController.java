@@ -1,4 +1,4 @@
-package poly.aps.smo;
+package poly.aps.qs;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -91,7 +91,6 @@ public class StatController {
 
     public void taskCreated(int source) {
         totalTasksCreated++;
-        System.out.println("Created task " + source);
         sourcesStats.get(source).addGeneratedTask();
     }
 
@@ -104,7 +103,6 @@ public class StatController {
         }
         sourcesStats.get(source).addFinishedTaskTime(totalTime);
         sourcesStats.get(source).addBufferedTime(totalTime - processedTime);
-        System.out.println(getAverageTime() + " " + getTotalTasksCreated() + " " + getAverageWorkingTime());
     }
 
     public void taskRejected(int source, double workingTime) {
@@ -133,7 +131,7 @@ public class StatController {
         DecimalFormat df = new DecimalFormat("#.###");
         Path file = Paths.get("source_stats.csv");
         List<String> lines = new ArrayList<>();
-        lines.add("Source,N of requests,Probability of rejected request,Avg. time in system,Buffer time,Passage time,Dispersion (buffered time),Dispersion (total time)");
+        lines.add("Source,N of requests,Probability of rejected request,Processed time,Buffer time,Total time,Dispersion (buffered time),Dispersion (total time)");
         for (StatSource ss: sourcesStats) {
             String str = String.valueOf(i) +
                     ',' +
@@ -141,7 +139,7 @@ public class StatController {
                     ',' +
                     df.format((double) ss.getRejectedTasksCount() / ss.getGeneratedTasksCount()) +
                     ',' +
-                    df.format((ss.getTasksTotalTime() + ss.getBufferedTime()) / ss.getGeneratedTasksCount()) +
+                    df.format((ss.getTasksTotalTime() - ss.getBufferedTime()) / ss.getGeneratedTasksCount()) +
                     ',' +
                     df.format(ss.getBufferedTime() / ss.getGeneratedTasksCount()) +
                     ',' +

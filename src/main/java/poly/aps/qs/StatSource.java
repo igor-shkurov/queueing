@@ -1,4 +1,4 @@
-package poly.aps.smo;
+package poly.aps.qs;
 
 public class StatSource {
     private int generatedTasksCount = 0;

@@ -1,4 +1,4 @@
-package poly.aps.smo;
+package poly.aps.qs;
 
 import java.util.Random;
 

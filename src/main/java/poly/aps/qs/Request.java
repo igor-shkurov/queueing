@@ -1,4 +1,4 @@
-package poly.aps.smo;
+package poly.aps.qs;
 
 public class Request {
     private final int sourceNumber;

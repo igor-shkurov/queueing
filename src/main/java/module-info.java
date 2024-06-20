@@ -4,6 +4,6 @@ module poly.aps.smo {
     requires javafx.graphics;
 
 
-    opens poly.aps.smo to javafx.fxml;
-    exports poly.aps.smo;
+    opens poly.aps.qs to javafx.fxml;
+    exports poly.aps.qs;
 }

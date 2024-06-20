@@ -1,4 +1,4 @@
-package poly.aps.smo;
+package poly.aps.qs;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.TreeSet;
 
 public class ButtonController {
