@@ -20,7 +20,7 @@ One approach to constructing a simulation model is to build it as a queuing syst
 * Controller (C)
 * Request (R)
 
-![](qs_diagram.png)
+![](img/qs_diagram.png)
 *Figure 1. Example structure of a queuing system*
 
 In Figure 1, Si (i = 1...n) represents a source of requests, which generates requests, and together n sources create the input flow of requests into the system. The sources can be of two types: finite and infinite. The difference lies in the method of request generation.
@@ -88,15 +88,37 @@ ___
 * JavaFX 16 (Controls and fxml)
 * JUnit 5
 ___
-## 4. UML Diagram (Auto-generated)
-![](class_diagram.png)
+## 4. Interface
+The screenshots of the GUI are presented below:
+<br />
+### Inital settings:
+![](img/settings_page.png)
+*Figure 2.*
+### Step-mode visualisation:
+![](img/step_mode.png)
+*Figure 3.*
+### Auto-mode visualisation:
+![](img/auto_mode.png)
+*Figure 4.*
+### Output files with statistics collected (in .csv format):
+![](img/source_output.png)
+<br />
+*Figure 5. File: source_stats.csv*
+<br/>
+![](img/device_output.png)
+<br />
+*Figure 6. File: device_stats.csv*
+<br/>
 ___
-## 5. Testing
+## 5. UML Diagram (Auto-generated)
+![](img/class_diagram.png)
+___
+## 6. Testing
 The test coverage is presented below: (todo: add more tests)
 <br />
-![](coverage.png)
+![](img/coverage.png)
 ___
-## 6. Launching the project
+## 7. Launching the project
 To build and run - type in the following command:
 ```
 mvn clean javafx:run
